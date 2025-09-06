@@ -10,7 +10,6 @@ export const UserProvider = ({children})=>{
     const logout = () =>{
         clearLocalStorage()
         setuserData(null)
-        window.location.reload()
     }
 
     return <UserContext.Provider value={{userData,setuserData,logout}}>
