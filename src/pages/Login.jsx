@@ -8,7 +8,7 @@ import { toast } from 'react-toastify'
 import { storeItemToLocalStorage } from '../helper/helper'
 import { API_ROUTES, STORAGE_KEY } from '../config/config'
 import axiosInstance from '../config/axiosInstance'
-import { useUser,UserProvider } from '../contexts/userContext'
+import { useUser,UserProvider } from '../contexts/UserContext'
 
 
 const Login = () => {

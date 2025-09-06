@@ -8,7 +8,7 @@ import {routes} from '../config/routes'
 import { STORAGE_KEY } from '../config/config';
 import ConfirmOverlay from './ConfirmOverlay';
 import { GoSidebarExpand ,GoSidebarCollapse} from "react-icons/go";
-import { useUser } from '../contexts/userContext';
+import { useUser } from '../contexts/UserContext';
 
 const Sidebar = () => {
 
