@@ -41,8 +41,7 @@ const Login = () => {
               storeItemToLocalStorage(STORAGE_KEY.USER_DATA,response.data.data)
               storeItemToLocalStorage(STORAGE_KEY.TOKEN,response.data.token)
               window.location.reload()
-              console.log(allwoedRoutes[0])
-              navigate(allwoedRoutes[0])
+              navigate(allwoedRoutes[0]?.childern[0]?.path)
             }            
         }catch(error){
             console.log("Error:",error.response.data)
