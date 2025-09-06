@@ -6,7 +6,8 @@ import { faEye, faEyeSlash } from '@fortawesome/free-regular-svg-icons'
 import axios from 'axios'
 import { toast } from 'react-toastify'
 import { storeItemToLocalStorage } from '../helper/helper'
-import { STORAGE_KEY } from '../config/config'
+import { API_ROUTES, STORAGE_KEY } from '../config/config'
+import axiosInstance from '../config/axiosInstance'
 const Login = () => {
 
     const [email, setemail] = useState('')
@@ -31,9 +32,10 @@ const Login = () => {
                 alert("Please Enter Your Password")
                 return
             }
-            const response = await axios.post('http://localhost:8080/api/v1/user/LoginUser',{
+            const response = await axiosInstance.post(API_ROUTES.LOGIN_URL,{
               email,password
             })
+            console.log(response)
             if(response.data.success){
               const allwoedRoutes = response.data.data.allowedRoutes
               storeItemToLocalStorage(STORAGE_KEY.USER_DATA,response.data.data)
