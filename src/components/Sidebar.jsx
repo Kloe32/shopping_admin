@@ -8,22 +8,16 @@ import {routes} from '../config/routes'
 import { STORAGE_KEY } from '../config/config';
 import ConfirmOverlay from './ConfirmOverlay';
 import { GoSidebarExpand ,GoSidebarCollapse} from "react-icons/go";
+import { useUser } from '../contexts/userContext';
 
 const Sidebar = () => {
 
-    const [userData, setuserData] = useState(getItemFromLocalStorage(STORAGE_KEY.USER_DATA))
+    const {logout,userData,setuserData} =useUser()
     const [isOverlayOpen, setIsOverlayOpen] = useState(false)
     const [isCollaspe, setIsCollaspe] = useState(false)
     const allowedRoutes = userData?.allowedRoutes
     const mainChildren = routes.find(route => Array.isArray(route.children) && route.children.length > 0)
     const navigation = mainChildren.children.filter((child)=>allowedRoutes.includes(child.path))
-
-
-    const logout = ()=>{
-        clearLocalStorage(STORAGE_KEY.USER_DATA)
-        clearLocalStorage(STORAGE_KEY.TOKEN)
-        window.location.reload()
-    }
 
     return (
     <div className={`relative flex flex-col p-2 h-screen gap-3 bg-background text-white  ${isCollaspe?'w-[5%]':' w-[18%]'}`}>

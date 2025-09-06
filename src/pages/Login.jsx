@@ -1,6 +1,6 @@
 import React, { useState,useEffect } from 'react'
 import logo from '../assets/img/logo.png'
-import { Link, useNavigate } from 'react-router-dom'
+import { data, Link, useNavigate } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEye, faEyeSlash } from '@fortawesome/free-regular-svg-icons'
 import axios from 'axios'
@@ -8,6 +8,9 @@ import { toast } from 'react-toastify'
 import { storeItemToLocalStorage } from '../helper/helper'
 import { API_ROUTES, STORAGE_KEY } from '../config/config'
 import axiosInstance from '../config/axiosInstance'
+import { useUser,UserProvider } from '../contexts/userContext'
+
+
 const Login = () => {
 
     const [email, setemail] = useState('')
@@ -15,7 +18,7 @@ const Login = () => {
     const [isShowPassword,setisShowPassword] = useState(false)
     const [isRemember,setisRemember] =useState(false)
     const [isLoading, setIsLoading] = useState(false)
-
+    const {setuserData} = useUser()
     const emailRegX = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
     const navigate  =useNavigate()
 
@@ -37,11 +40,9 @@ const Login = () => {
             })
             console.log(response)
             if(response.data.success){
-              const allwoedRoutes = response.data.data.allowedRoutes
+              setuserData(response.data.data)
               storeItemToLocalStorage(STORAGE_KEY.USER_DATA,response.data.data)
               storeItemToLocalStorage(STORAGE_KEY.TOKEN,response.data.token)
-              window.location.reload()
-              navigate(allwoedRoutes[0]?.childern[0]?.path)
             }            
         }catch(error){
             console.log("Error:",error.response.data)

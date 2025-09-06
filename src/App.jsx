@@ -6,10 +6,10 @@ import { getItemFromLocalStorage, storeItemToLocalStorage } from './helper/helpe
 import { STORAGE_KEY } from './config/config'
 import {routes} from './config/routes'
 import { createBrowserRouter, Navigate, RouterProvider } from 'react-router-dom'
+import { UserProvider, useUser } from './contexts/userContext'
+function AppContent() {
 
-function App() {
-  const [userData, setUserData] = useState(getItemFromLocalStorage(STORAGE_KEY.USER_DATA))
-
+  const {userData,setUserData} = useUser()
   const router = useMemo(()=>{
     const allowedRoutes =userData?.allowedRoutes || ['/login']
 
@@ -35,5 +35,9 @@ function App() {
 
   return <RouterProvider router={router} />
 }
+
+const App = ()=> <UserProvider>
+  <AppContent />
+</UserProvider>
 
 export default App

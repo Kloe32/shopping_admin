@@ -4,7 +4,7 @@ export const STORAGE_KEY = {
 }
 
 export const API_ROUTES = {
-    // LOCAL_URL:"http://localhost:8080/api/v1",
-    BASE_URL:'https://shopping-server-nerj.onrender.com/api/v1',
+    LOCAL_URL:"http://localhost:8080/api/v1",
+    // BASE_URL:'https://shopping-server-nerj.onrender.com/api/v1',
     LOGIN_URL:"/user/LoginUser"
 }
