@@ -6,7 +6,7 @@ import { getItemFromLocalStorage, storeItemToLocalStorage } from './helper/helpe
 import { STORAGE_KEY } from './config/config'
 import {routes} from './config/routes'
 import { createBrowserRouter, Navigate, RouterProvider } from 'react-router-dom'
-import { UserProvider, useUser } from './contexts/userContext'
+import { UserProvider, useUser } from './contexts/UserContext'
 function AppContent() {
 
   const {userData,setUserData} = useUser()
