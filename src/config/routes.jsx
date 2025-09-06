@@ -3,7 +3,7 @@ import CreateUser from "../pages/CreateUser";
 import Order from "../pages/Order";
 import Product from "../pages/Product";
 import Unit from "../pages/Unit";
-import Login from "../pages/login";
+import Login from "../pages/Login";
 import Layout from "../components/Layout";
 import { Navigate } from "react-router-dom";
 import Dashboard from "../pages/Dashboard";
