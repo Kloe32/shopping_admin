@@ -1,8 +1,9 @@
 import React, { useEffect,useState } from 'react'
 import Sidebar from '../components/Sidebar'
 import { getItemFromLocalStorage } from '../helper/helper'
-import { STORAGE_KEY } from '../config/config'
+import { API_ROUTES, STORAGE_KEY } from '../config/config'
 import axios from 'axios'
+import axiosInstance from '../config/axiosInstance'
 
 
 const CreateUser = () => {
@@ -10,13 +11,7 @@ const CreateUser = () => {
   const fetchUsers = async () =>{
     try {
       const token = getItemFromLocalStorage(STORAGE_KEY.TOKEN)
-
-      
-      const response = await axios.get('http://localhost:8080/api/v1/user',{
-        headers: {
-          'x-access-token':`${token}`
-        }}
-      )
+      const response = await axiosInstance.get(API_ROUTES.GET_URL)
       console.log(response.data.users)
       setUsers(response.data.users)
     } catch (error) {

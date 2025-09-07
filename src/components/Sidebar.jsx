@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import logo from '../assets/img/logo.png'
+import logo from '../assets/logoFull1.svg'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { clearLocalStorage, getItemFromLocalStorage, storeItemToLocalStorage } from '../helper/helper'
 import { FaUser, FaUserCog } from "react-icons/fa";
@@ -20,8 +20,8 @@ const Sidebar = () => {
     const navigation = mainChildren.children.filter((child)=>allowedRoutes.includes(child.path))
 
     return (
-    <div className={`relative flex flex-col p-2 h-screen gap-3 bg-background text-white  ${isCollaspe?'w-[5%]':' w-[18%]'}`}>
-
+    <div className={`relative flex flex-col p-2 h-screen gap-3 bg-primary text-white  ${isCollaspe?'w-[5%]':' w-[18%]'}`}>
+{/* 
         <div className={`flex  border-b-1 ${isCollaspe?'justify-center':'justify-between'}`}>
             <div className={` ${isCollaspe ? 'hidden' :'flex'} gap-4 items-center p-3 `}>
                 <div className='text-3xl border-2 border-white rounded-full p-3'>
@@ -43,11 +43,14 @@ const Sidebar = () => {
                         }
                     </button>
             </div>
-        </div>        
+        </div>         */}
+        <div className='flex justify-center items-center py-4'>
+            <img src={logo} alt="" className='lg:w-[120px]' />
+        </div>
         <div className='flex flex-col gap-3 justify-between text-xl h-full'>
-            <div className={`flex flex-col gap-3 p-1`}>
+            <div className={`flex flex-col gap-3 p-2`}>
                 {
-                    navigation.map((nav,i)=><NavLink key={i} to={nav.path} className={({isActive})=> `${isActive?"text-white bg-[#17212c]":"text-text-blur"} ${isCollaspe?'gap-4 justify-center items-center text-3xl':''} flex items-center gap-2  p-2`}>
+                    navigation.map((nav,i)=><NavLink key={i} to={nav.path} className={({isActive})=> `${isActive?"text-white bg-hover":"text-text-blur"} ${isCollaspe?'gap-4 justify-center items-center text-3xl':''}  rounded-md flex items-center gap-2  p-3`}>
                         {
                             nav.icon
                         }{
@@ -56,7 +59,7 @@ const Sidebar = () => {
                     </NavLink>)
                 }
             </div>
-            <div>
+            <div className='flex p-2 justify-center'>
                 <button onClick={()=>setIsOverlayOpen(!isOverlayOpen)} className='flex gap-2 items-center cursor-pointer hover:text-white/60'><SlLogout />Logout</button>
             </div>
             <ConfirmOverlay 

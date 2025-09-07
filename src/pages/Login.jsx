@@ -1,5 +1,5 @@
 import React, { useState,useEffect } from 'react'
-import logo from '../assets/img/logo.png'
+import logo from '../assets/logoFull.svg'
 import { data, Link, useNavigate } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEye, faEyeSlash } from '@fortawesome/free-regular-svg-icons'
@@ -52,10 +52,10 @@ const Login = () => {
     
     return (
         <>
-            <div className={`h-screen w-screen bg-[url('https://wallpapers.com/images/hd/cubed-squares-black-3d-bqeujlzpj3p2e505.jpg')] bg-cover text-white flex justify-center items-center font-roboto`}>
-                <div className='flex flex-col gap-5 bg-slate-200/20 lg:py-[30px] lg:px-[70px] p-[20px] md:p-[40px] shadow-xl shadow-white/10 rounded-lg backdrop-blur-xs border-2 border-white/20' >
+            <div className={`h-screen w-screen bg-[url('https://images.unsplash.com/photo-1687197180710-b2b9484a3c5f?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDE1fHx8ZW58MHx8fHx8')] bg-cover text-white flex justify-center items-center font-roboto`}>
+                <div className='flex flex-col gap-5 lg:py-[30px] lg:px-[70px] p-[20px] md:p-[40px] rounded-xl glassy-card border-2' >
                     <div className='flex justify-center items-center'>
-                        <img src={logo} alt="" className='w-[200px]'/>
+                        <img src={logo} alt="" className='lg:w-[100px] w-[70px]'/>
                     </div>
                     <h2 className='text-2xl font-bold'>Login</h2>
                     <form action="" className='flex flex-col gap-4' onSubmit={(e)=>{handleSubmit(e)}}>   
@@ -82,7 +82,7 @@ const Login = () => {
                                 Forget Password?
                             </div>
                         </div>
-                        <button className='relative bg-gray-800 p-2 rounded-md cursor-pointer hover:opacity-75 active:opacity-80' > Login
+                        <button className='relative transition-all duration-150 bg-primary p-2 rounded-md cursor-pointer hover:bg-hover active:bg-primary/70' > Login
                         </button>
                     </form>
                 </div>
