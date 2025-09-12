@@ -1,6 +1,6 @@
 import axios from "axios";
 import {API_ROUTES,STORAGE_KEY} from './config';
-import { getItemFromLocalStorage } from "../helper/helper";
+import { clearLocalStorage, getItemFromLocalStorage } from "../helper/helper";
 
 const axiosInstance = axios.create({
     // baseURL:API_ROUTES.BASE_URL,
@@ -23,6 +23,7 @@ axiosInstance.interceptors.response.use(
     (error)=>{
         if(error.response && [401,403].includes(error.response.status)){
             if(window.location.pathname !== '/login'){
+                clearLocalStorage()
                 window.location.pathname = '/login';
             }
             return Promise.reject(error)

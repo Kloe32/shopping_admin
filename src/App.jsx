@@ -4,15 +4,17 @@ import viteLogo from '/vite.svg'
 import './App.css'
 import { getItemFromLocalStorage, storeItemToLocalStorage } from './helper/helper'
 import { STORAGE_KEY } from './config/config'
-import {routes} from './config/routes'
+import {routes, DEFAULT_ROUTES} from './config/routes'
 import { createBrowserRouter, Navigate, RouterProvider } from 'react-router-dom'
 import { UserProvider, useUser } from './contexts/UserContext'
+import { ToastContainer } from 'react-toastify'
+
 function AppContent() {
 
   const {userData,setUserData} = useUser()
   const router = useMemo(()=>{
-    const allowedRoutes =userData?.allowedRoutes || ['/login']
-
+    const userAllowedRoutes =userData?.allowedRoutes || []
+    const allowedRoutes = userData ? [...userAllowedRoutes,...DEFAULT_ROUTES] : ["/login"]
     const filteredRoutes = routes.map((route)=>{
       if(route.children){
         const allowedChildren = route.children.filter((child)=>allowedRoutes?.includes(child.path))
@@ -38,6 +40,15 @@ function AppContent() {
 
 const App = ()=> <UserProvider>
   <AppContent />
+    <ToastContainer
+    position='bottom-right'
+    autoClose={3000}
+    hideProgressBar ={false}
+    closeOnClick={true}
+    draggable
+    pauseOnHover
+    theme='dark'
+  />
 </UserProvider>
 
 export default App

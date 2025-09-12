@@ -1,7 +1,7 @@
 import { createContext,useContext,useState, useEffect } from "react";
 import { clearLocalStorage, getItemFromLocalStorage } from "../helper/helper";
 import { STORAGE_KEY } from "../config/config";
-
+import { routes } from "../config/routes";
 const UserContext = createContext()
 
 export const UserProvider = ({children})=>{
@@ -11,6 +11,7 @@ export const UserProvider = ({children})=>{
         clearLocalStorage()
         setuserData(null)
     }
+
 
     return <UserContext.Provider value={{userData,setuserData,logout}}>
         {children}
