@@ -16,7 +16,7 @@ const Nav = () => {
         setIsProfileOpen(false)
     },[location.pathname])
     
-    const menuName = sideBarMenu.filter((side)=>location.pathname===side.path)[0].name
+    const menuName = sideBarMenu?.filter((side)=>location.pathname===side.path)[0]?.name
 
 
 return (
@@ -24,7 +24,7 @@ return (
         <h3 className='text-2xl font-bold'>{menuName}</h3>
         <div className='flex items-center gap-3'>
             <div>
-                {userData.name}
+                {userData?.name}
             </div>
             
             <div className='relative'>
@@ -37,7 +37,7 @@ return (
                     <div className="border-t border-gray-100 my-1"></div>
                     <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors">
                         Customize Profile
-                    </a>
+                    </a>    
                     <div className="border-t border-gray-100 my-1"></div>
                     <div className='w-full hover:bg-gray-100 hover:cursor-pointer'>
                         <button onClick={()=>setIsOverlayOpen(!isOverlayOpen)} className='w-full text-left px-4 py-2 text-sm text-red-500 transition-colors rounded-b-lg hover:cursor-pointer'>Logout</button>

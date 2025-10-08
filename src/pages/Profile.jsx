@@ -39,9 +39,8 @@ const Profile = () => {
         if (file) formData.append("file", file)
         formData.append("name", name.trim())
         formData.append("email", email.trim())
-        
         try {
-            const response =await axiosInstance.put(`${API_ROUTES.UPDATE_URL}/${userData._id}`, formData, {
+            const response = await axiosInstance.put(`${API_ROUTES.UPDATE_URL}/${userData._id}`, formData, {
                 headers: { "Content-Type": "multipart/form-data" }
             })
             if(!response) return

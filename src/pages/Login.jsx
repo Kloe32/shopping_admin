@@ -38,8 +38,8 @@ const Login = () => {
             const response = await axiosInstance.post(API_ROUTES.LOGIN_URL,{
               email,password
             })
-            console.log(response)
-            if(response.data.success){
+
+            if(response?.data.success){
               setuserData(response.data.data)
               storeItemToLocalStorage(STORAGE_KEY.USER_DATA,response.data.data)
               storeItemToLocalStorage(STORAGE_KEY.TOKEN,response.data.token)
