@@ -1,17 +1,42 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
-@theme{
-    --color-hover:#004799;
-    --color-primary:#003366;
-    --color-secondary:#4fd1c5;
-    --color-background:#0a1218;
-    --color-text-blur:#8d959e;
+@theme {
+  --color-hover: #004799;
+  --color-primary: #003366;
+  --color-secondary: #4fd1c5;
+  --color-background: #0a1218;
+  --color-text-blur: #8d959e;
 }
 
 .glassy-card {
-    border: 3px solid hsl(0,0%,100%,0.3);
-    background: hsl(0,0%,100%,0.2);
-    backdrop-filter: blur(2px);
+  border: 3px solid hsl(0, 0%, 100%, 0.3);
+  background: hsl(0, 0%, 100%, 0.2);
+  backdrop-filter: blur(2px);
 
-    box-shadow: inset 0 0 8px 1px hsl(0,0%,100%,0.3);
+  box-shadow: inset 0 0 8px 1px hsl(0, 0%, 100%, 0.3);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes scaleIn {
+  from {
+    transform: scale(0.95);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+.animate-fadeIn {
+  animation: fadeIn 0.2s ease-out forwards;
+}
+.animate-scaleIn {
+  animation: scaleIn 0.2s ease-out forwards;
 }

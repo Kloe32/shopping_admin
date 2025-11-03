@@ -1,93 +1,93 @@
-import React, { useEffect,useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Sidebar from '../components/Sidebar'
 import { getItemFromLocalStorage } from '../helper/helper'
 import { fetchUsers } from '../services/user.service'
-
+import { FaSearch } from 'react-icons/fa'
+import { MdModeEdit } from 'react-icons/md'
+import { IoTrashOutline } from 'react-icons/io5'
 
 const CreateUser = () => {
   const [users, setUsers] = useState([])
-
-  useEffect(()=>{
+  const [search, setSearch] = useState('')
+  useEffect(() => {
     handleFetch()
-  },[])
+  }, [])
 
-  const handleFetch = async ()=>{
+  const filteredUsers = users.filter((u) =>
+    u.name.toLowerCase().includes(search.toLowerCase())
+  )
+
+  const handleFetch = async () => {
     try {
       const response = await fetchUsers()
-      if(response.success){
+      if (response.success) {
         setUsers(response.data)
       }
     } catch (error) {
-      
+      console.log('Error Fetching Users.', error)
     }
   }
-  
-  useEffect(()=>{
-    fetchUsers()
-  },[])
   return (
-
-    <div className='flex flex-col relative min-h-full'>
-      <div className='w-full p-5 flex flex-col gap-2'>
-        <div className='flex justify-end'>
-
-        <button className='px-3 py-2 bg-primary rounded-md cursor-pointer text-white hover:opacity-60'>+ Add New User</button>
-        </div>
-        <table className='bg-slate-300 border-1 p-1 w-full'>
-        <thead className='text-center h-15'>
-          <tr className='border-1'>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Role</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody className='text-center h-15'>
-          {
-            users.map((user)=>(
-              <tr key={user._id}>
-                <td>{user.name}</td>
-                <td>{user.email}</td>
-                <td>{user.role}</td>
-                <td className='flex justify-center items-center'>
-                  <div className='flex gap-3 items-center h-full'>
-                    <button className='px-3 py-2 bg-primary rounded-md cursor-pointer text-white hover:opacity-80'>Edit</button>
-                    <button className='px-3 py-2 bg-red-500 rounded-md cursor-pointer text-white hover:opacity-60'>Delete</button>
-                  </div>
-                </td>
-              </tr>
-            ))
-          }            
-        </tbody>
-        </table>
+    <div className="min-h-screen bg-gray-50 px-6 py-10">
+      <div className="relative max-w-md mb-8">
+        <FaSearch className="absolute left-3 top-3 text-gray-400" size={18} />
+        <input
+          type="text"
+          placeholder="Search users..."
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          className="w-full pl-10 pr-4 py-2 border border-gray-200 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+        />
       </div>
 
-      {/* <div className='absolute flex w-full h-full justify-center items-center bg-black/10 '>
-          <form action="" className='flex flex-col bg-white p-6 rounded-md gap-3'>
-            <h2 className='text-center text-2xl font-bold'>User Creation Form</h2>
-            <div className='flex w-full justify-between items-center text-xl'>
-              <label htmlFor="name">Name</label>
-              <input type="text" className='border-1 rounded-md p-2'/>
-              <label htmlFor="email">Email</label>
-              <input type="email"className='border-1 rounded-md p-2' />              
-            </div>
-            <div className='flex w-full justify-between items-center text-xl'>
-              <label htmlFor="password">Password</label>
-              <input type="text" className='border-1 rounded-md p-2'/>
-              <label htmlFor="role">Role</label>
-              <select name="" id="" className='border-1 rounded-md p-2'>
-                <option value="">--Please choose a role</option>
-                <option value="superadmin">Superadmin</option>
-                <option value="admin">Admin</option>
-                <option value="manager">Manager</option>
-                <option value="user">User</option>
-              </select>
-            </div>
-            <label htmlFor="">Select Allow Routes</label>
-            <input type="checkbox" />
-          </form>
-      </div> */}
+      {/* User Grid */}
+      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {filteredUsers.length > 0 ? (
+          filteredUsers.map((user) => (
+            <div
+              key={user._id}
+              className="bg-white border border-gray-100 rounded-2xl shadow hover:shadow-lg transition-all p-6 flex flex-col justify-between"
+            >
+              <div>
+                <div className="flex items-center justify-between mb-4">
+                  <h2 className="text-lg font-medium text-gray-800">
+                    {user.name}
+                  </h2>
+                  <span
+                    className={`text-xs px-2 py-1 rounded-full ${
+                      user.role === 'Admin'
+                        ? 'bg-blue-100 text-blue-600'
+                        : user.role === 'Editor'
+                          ? 'bg-green-100 text-green-600'
+                          : 'bg-gray-100 text-gray-600'
+                    }`}
+                  >
+                    {user.role}
+                  </span>
+                </div>
+                <p className="text-sm text-gray-500">{user.email}</p>
+              </div>
 
+              {/* Action Buttons */}
+              <div className="flex justify-end gap-3 mt-6">
+                <button className="p-2 rounded-lg bg-blue-50 text-blue-600 hover:bg-blue-100 transition">
+                  <MdModeEdit size={18} />
+                </button>
+                <button className="p-2 rounded-lg bg-red-50 text-red-600 hover:bg-red-100 transition">
+                  <IoTrashOutline size={18} />
+                </button>
+              </div>
+            </div>
+          ))
+        ) : (
+          <div
+            key={'no-user'}
+            className="text-gray-500 text-center col-span-full py-12"
+          >
+            No users found.
+          </div>
+        )}
+      </div>
     </div>
   )
 }
