@@ -15,11 +15,9 @@ const Profile = () => {
   const [isLoading, setIsLoading] = useState(false)
   const onChangeImage = (file) => {
     if (!file) return
-
     const url = URL.createObjectURL(file)
-    console.log(url)
     setPreviewUrl(url)
-    setFile(file)
+    setFile(file) 
   }
 
   const triggerFileOpen = () => document.getElementById('image').click()
@@ -37,18 +35,18 @@ const Profile = () => {
     }
     const formData = new FormData()
     if (file) formData.append('file', file)
-    formData.append('name', name.trim())
+      formData.append('name', name.trim())
     formData.append('email', email.trim())
     try {
       const response = await axiosInstance.put(
-        `${API_ROUTES.UPDATE_URL}/${userData._id}`,
+        `${API_ROUTES.UPDATE_USER_URL}/${userData._id}`,
         formData,
         {
           headers: { 'Content-Type': 'multipart/form-data' },
         }
       )
+      console.log("HIIII", response)
       if (!response) return
-
       toast.success('Profile updated')
       storeItemToLocalStorage(STORAGE_KEY.USER_DATA, response?.data?.data)
       window.location.reload()
@@ -94,7 +92,7 @@ const Profile = () => {
               <div className="bg-slate-300 p-1 rounded-full">
                 <img
                   src={previewUrl}
-                  alt=""
+                  alt="Profile Image Preview"
                   className="w-22 h-22 rounded-full"
                 />
               </div>

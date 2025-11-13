@@ -43,7 +43,7 @@ const Nav = () => {
             />
           </button>
           <div
-            className={`absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-xl py-1 transform origin-top-right transition-all duration-200 scale-95 ${isProfileOpen ? 'scale-100 opacity-100' : 'opacity-0 pointer-events-none'}`}
+            className={`absolute z-100 right-0 mt-2 w-48 bg-white rounded-lg shadow-xl py-1 transform origin-top-right transition-all duration-200 scale-95 ${isProfileOpen ? 'scale-100 opacity-100' : 'opacity-0 pointer-events-none'}`}
           >
             <Link
               to={'profile'}
