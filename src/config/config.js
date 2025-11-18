@@ -14,7 +14,8 @@ export const API_ROUTES = {
   UPDATE_USER_URL: '/user/UpdateUser',
 
   //Role Routes
-  GET_ROLE_URL:"/role",
+  ROLE_URL:"/role",
+
 
   //Unit Routes
   UNIT_URL: '/unit',
@@ -34,3 +35,30 @@ export const roleColor = {
   "Super Admin": "bg-red-500",
   "Guest":"bg-green-500"
 }
+
+export const routes = [
+  {
+    name: 'Dashboard',
+    path: '/dashboard',
+  },
+  {
+    name: 'Manage User',
+    path: '/create-user',
+  },
+  {
+    name: 'Manage Product',
+    path: '/product',
+  },
+  {
+    name: 'Manage Order',
+    path: '/order',
+  },
+  {
+    name: 'Manage Category',
+    path: '/category',
+  },
+  {
+    name: 'Manage Unit',
+    path: '/unit',
+  },
+]
