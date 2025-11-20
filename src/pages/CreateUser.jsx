@@ -123,7 +123,10 @@ const CreateUser = () => {
           </div>
         </div>
         <div className={`w-80 p-4 bg-white rounded-lg shadow ${isRoleBarOpen ? "flex": "hidden"}`}>
-            <Role isOpen={setIsRoleBarOpen}/>
+            <Role isOpen={setIsRoleBarOpen}
+              setIsAddingRole = {setIsAddingRole}
+              isAddingRole = {isAddingRole}
+            />
         </div>
       </div>
         {showForm && 
@@ -192,13 +195,6 @@ const CreateUser = () => {
               </form>
             </div>
           </div>
-        }
-        {
-          isAddingRole &&
-          <RoleModal 
-            isOpen={setIsAddingRole}
-            title="Add New Role"
-           />
         }
     </div>
   )
