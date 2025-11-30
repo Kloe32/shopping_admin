@@ -3,10 +3,10 @@ import { routes } from '../config/config'
 import { toast } from 'react-toastify';
 import { addRole } from '../services/role.service';
 
-const RoleModal = ({isOpen,title}) => {
-  const [allowedRoutes, setAllowedRoutes] = useState([])
-  const [name,setName]=useState("")
-  const [description, setDescription] = useState("")
+const RoleModal = ({isOpen,title, role}) => {
+  const [allowedRoutes, setAllowedRoutes] = useState([] || role?.allowedRoutes)
+  const [name,setName]=useState("" || role?.name)
+  const [description, setDescription] = useState(role?.description ||"")
 
   const handlePathSelection = (path) =>{
     if(allowedRoutes.includes(path)){
@@ -34,6 +34,10 @@ const RoleModal = ({isOpen,title}) => {
         allowedRoutes
       }
 
+      if(role !== undefined){
+
+      }
+
       const response = await addRole(payload)
       if(response.success){
         toast.success(`Role Created Successfully.`)
@@ -59,10 +63,10 @@ const RoleModal = ({isOpen,title}) => {
             <h1 className='text-2xl font-bold text-center'>{title}</h1>
             <input value={name}
             onChange={(e)=>setName(e.target.value)}
-             type="text" placeholder='Name' className='p-2 border-1 border-slate-200 rounded-lg outline-1 outline-slate-400'/>
+             type="text" placeholder='Name' className='p-2 border-2 border-slate-200 rounded-lg outline-1 outline-slate-400'/>
             <input value={description} 
             onChange={(e)=>setDescription(e.target.value)}
-            type="text" placeholder='Description' className='p-2 border-1 border-slate-200 rounded-lg outline-1 outline-slate-400'/>
+            type="text" placeholder='Description' className='p-2 border-2 border-slate-200 rounded-lg outline-1 outline-slate-400'/>
             <div className='grid grid-cols-2 gap-3'>
               {
                 routes.map((route,index)=>{

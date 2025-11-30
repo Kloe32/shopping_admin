@@ -12,6 +12,8 @@ export const API_ROUTES = {
   GET_USER_URL: '/user',
   GET_ADMIN_URL: 'user/admin',
   UPDATE_USER_URL: '/user/UpdateUser',
+  CREATE_USER_URL:'/user/CreateUser',
+  DELETE_USER_URL:'/user/DeleteUser',
 
   //Role Routes
   ROLE_URL:"/role",

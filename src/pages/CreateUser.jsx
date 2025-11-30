@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import Sidebar from '../components/Sidebar'
 import RoleModal from '../components/RoleModal'
 import { getItemFromLocalStorage } from '../helper/helper'
-import { fetchUsers } from '../services/user.service'
+import { deleteUser, fetchUsers } from '../services/user.service'
 import { FaSearch } from 'react-icons/fa'
 import { MdModeEdit } from 'react-icons/md'
 import { IoTrashOutline } from 'react-icons/io5'
@@ -10,6 +10,10 @@ import { FaUpload } from "react-icons/fa6";
 import { AiOutlineUsergroupAdd } from "react-icons/ai";
 import { RiUserSettingsLine, RiListCheck2 } from "react-icons/ri";
 import Role from '../components/Role'
+import UserModal from '../components/UserModal'
+import { BsFillTrash3Fill } from 'react-icons/bs'
+import { toast } from 'react-toastify'
+import ConfirmationOverlay from '../components/ConfirmationOverlay'
 
 const CreateUser = () => {
   const [users, setUsers] = useState([])
@@ -18,6 +22,7 @@ const CreateUser = () => {
   const [isAddingRole, setIsAddingRole] = useState(false)
   const [showForm,setShowForm]= useState(false)
   const [isRoleBarOpen, setIsRoleBarOpen] = useState(false)
+  const [userToDelete,setUserToDelete] = useState(null)
   useEffect(() => {
     handleFetch()
   }, [])
@@ -38,9 +43,32 @@ const CreateUser = () => {
     }
   }
 
-  const handleSubmit = async () =>{
-
+  const handleDeleteClick = (user) =>{
+    setUserToDelete(user)
   }
+  const confirmDelete = () => {
+    if (userToDelete) {
+      handleDeleteUser(userToDelete?._id)
+      setUserToDelete(null)
+    }
+  }
+
+  const cancelDelete = () => {
+    setUserToDelete(null)
+  }
+  const handleDeleteUser = async (id) =>{
+    try {
+      const response = await deleteUser(id)
+      if(response.success){
+        toast.warn("User Successfully Deleted")
+        setUsers(users.filter((u) => u._id !== id))
+      }
+    } catch (error) {
+        console.log('User Deleting Error',error)
+        toast.error("Something was wrong!")
+    }
+  }
+
   return (
     <div className="min-h-screen bg-gray-50 px-6 py-10">
       <div className="relative min-w-full mb-8 flex justify-between">
@@ -102,11 +130,11 @@ const CreateUser = () => {
                     <p className="text-sm text-gray-500">Email: {user?.email}</p>
                   </div>
                   <div className="flex justify-end gap-3 mt-6">
-                    <button className="p-2 rounded-lg bg-blue-50 text-blue-600 hover:bg-blue-100 transition">
+                    <button className="p-2 rounded-lg bg-blue-50 text-blue-600 cursor-pointer hover:bg-blue-100 transition">
                       <MdModeEdit size={18} />
                     </button>
-                    <button className="p-2 rounded-lg bg-red-50 text-red-600 hover:bg-red-100 transition">
-                      <IoTrashOutline size={18} />
+                    <button className="p-2 rounded-lg bg-red-50 text-red-600 cursor-pointer hover:bg-red-100 transition">
+                      <IoTrashOutline size={18} onClick={()=>handleDeleteClick(user)}/>
                     </button>
                   </div>
                 </div>
@@ -129,73 +157,38 @@ const CreateUser = () => {
             />
         </div>
       </div>
-        {showForm && 
-          <div className="fixed inset-0 flex items-center justify-center bg-black/40 z-50">
-            <div className="bg-white rounded-2xl w-full max-w-md shadow-lg p-6 relative">
-              <h2 className="text-xl font-semibold mb-4 text-gray-800">
-                {editingUser ? "Edit User" : "Add New User"}
-              </h2>
-              <form onSubmit={handleSubmit} className='space-y-4'>
-                <div className="flex flex-col items-center gap-3">
-                  <img
-                    src={"https://placehold.co/100"}
-                    alt="Profile Preview"
-                    className="w-24 h-24 rounded-full object-cover border"
-                  />
-                  <label className="cursor-pointer flex items-center gap-2 text-sm text-blue-600 hover:text-blue-800">
-                    <FaUpload size={16} /> Upload Photo
-                    <input type="file" accept="image/*" className="hidden" />
-                  </label>
-                </div>
-
-                <div>
-                  <label className="text-sm font-medium text-gray-700">Full Name</label>
-                  <input
-                    type="text"
-                    required
-                    className="w-full mt-1 px-3 py-2 border rounded-xl focus:ring-2 focus:ring-blue-500"
-                  />
-                </div>
-
-                <div>
-                  <label className="text-sm font-medium text-gray-700">Email</label>
-                  <input
-                    type="email"
-                    required
-                    className="w-full mt-1 px-3 py-2 border rounded-xl focus:ring-2 focus:ring-blue-500"
-                  />
-                </div>
-
-                <div>
-                  <label className="text-sm font-medium text-gray-700">Role</label>
-                  <select
-                    className="w-full mt-1 px-3 py-2 border rounded-xl focus:ring-2 focus:ring-blue-500"
-                  >
-                    <option value="Admin">Admin</option>
-                    <option value="Editor">Editor</option>
-                    <option value="Viewer">Viewer</option>
-                  </select>
-                </div>
-
-                <div className="flex justify-end gap-3 mt-6">
-                  <button
-                    type="button"
-                    onClick={() => setShowForm(false)}
-                    className="px-4 py-2 rounded-xl bg-gray-100 hover:bg-gray-200 text-gray-700"
-                  >
-                    Cancel
-                  </button>
-                  <button
-                    type="submit"
-                    className="px-4 py-2 rounded-xl bg-blue-600 text-white hover:bg-blue-700"
-                  >
-                    {editingUser ? "Save Changes" : "Add User"}
-                  </button>
-                </div>
-              </form>
-            </div>
-          </div>
+        {
+          isAddingRole &&
+          <RoleModal 
+            isOpen={setIsAddingRole}
+            title="Add New Role"
+           />
+        } 
+        {
+          showForm && 
+            <UserModal 
+              setShowForm={setShowForm}
+              setUsers={setUsers}
+            />         
         }
+
+      {userToDelete && (
+        <ConfirmationOverlay
+          title="Delete User?"
+          textHtml={
+            <p>
+              Are you sure you want to delete user {' '}
+              <span className="font-bold">"{userToDelete?.name}"</span>? This
+              action cannot be undone.
+            </p>
+          }
+          dataToDelete={userToDelete}
+          onCancel={cancelDelete}
+          onConfirm={confirmDelete}
+          icon={<BsFillTrash3Fill className="h-6 w-6 text-red-600" />}
+          btnText="Delete"
+        />
+      )}
     </div>
   )
 }

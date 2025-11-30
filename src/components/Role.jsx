@@ -7,10 +7,12 @@ import { BsFillTrash3Fill } from 'react-icons/bs'
 import { toast } from 'react-toastify';
 import RoleModal from './RoleModal';
 
-const Role = ({isOpen,setIsAddingRole,isAddingRole}) => {
+const Role = ({isOpen}) => {
 
     const [roles, setRoles] = useState([])
     const [roleToDelete, setRoleToDelete] = useState(null)
+    const [isEditing, setIsEditing] = useState(false)
+    const [editingRole,setEditingRole] =useState(null)
 
     const handleFetch = async () => {
         try {
@@ -95,7 +97,12 @@ const Role = ({isOpen,setIsAddingRole,isAddingRole}) => {
                         {role?.name}
                     </div>
                     <div className='flex gap-3 text-sm font-semibold'>
-                        <button className='cursor-pointer active:opacity-65 text-blue-400 hover:opacity-50'>
+                        <button className='cursor-pointer active:opacity-65 text-blue-400 hover:opacity-50'
+                            onClick={()=> {
+                                setIsEditing(true)
+                                setEditingRole(role)
+                            }}
+                        >
                             Edit
                         </button>
                         <button className='cursor-pointer active:opacity-65 text-red-400 hover:opacity-50' onClick={()=> handleDeleteClick(role)}>
@@ -105,16 +112,17 @@ const Role = ({isOpen,setIsAddingRole,isAddingRole}) => {
                 </div>
             ))
         }
+        {
+            isEditing &&
+            <RoleModal 
+                isOpen={setIsEditing} 
+                title={"Edit Role"}
+                role={editingRole}
+            />
+        }
         <div className='py-3 border-t-1 border-gray-400 flex flex-col items-baseline'>
             Total Roles: {roles.length}
         </div>
-        {
-          isAddingRole &&
-          <RoleModal 
-            isOpen={setIsAddingRole}
-            title="Add New Role"
-           />
-        }
     </div>
   )
 }
