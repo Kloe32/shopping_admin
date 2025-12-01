@@ -69,6 +69,11 @@ const CreateUser = () => {
     }
   }
 
+  const handleUpdateClick = (user) =>{
+    seteditingUser(user)
+    setShowForm(true)
+  }
+
   return (
     <div className="min-h-screen bg-gray-50 px-6 py-10">
       <div className="relative min-w-full mb-8 flex justify-between">
@@ -131,7 +136,7 @@ const CreateUser = () => {
                   </div>
                   <div className="flex justify-end gap-3 mt-6">
                     <button className="p-2 rounded-lg bg-blue-50 text-blue-600 cursor-pointer hover:bg-blue-100 transition">
-                      <MdModeEdit size={18} />
+                      <MdModeEdit size={18} onClick={()=>handleUpdateClick(user)}/>
                     </button>
                     <button className="p-2 rounded-lg bg-red-50 text-red-600 cursor-pointer hover:bg-red-100 transition">
                       <IoTrashOutline size={18} onClick={()=>handleDeleteClick(user)}/>
@@ -169,6 +174,8 @@ const CreateUser = () => {
             <UserModal 
               setShowForm={setShowForm}
               setUsers={setUsers}
+              userData={editingUser}
+              setUserData={seteditingUser}
             />         
         }
 

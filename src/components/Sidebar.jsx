@@ -10,7 +10,7 @@ const Sidebar = () => {
   const { logout, userData, setuserData } = useUser()
   const [isOverlayOpen, setIsOverlayOpen] = useState(false)
   const [isCollaspe, setIsCollaspe] = useState(false)
-  const allowedRoutes = userData?.allowedRoutes
+  const allowedRoutes = userData?.role?.allowedRoutes
   const allowedSideBars = sideBarMenu.filter((side) =>
     allowedRoutes.includes(side.path)
   )

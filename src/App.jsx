@@ -15,7 +15,7 @@ import { ToastContainer } from 'react-toastify'
 function AppContent() {
   const { userData, setUserData } = useUser()
   const router = useMemo(() => {
-    const userAllowedRoutes = userData?.allowedRoutes || []
+    const userAllowedRoutes = userData?.role?.allowedRoutes || []
     const allowedRoutes = userData
       ? [...userAllowedRoutes, ...DEFAULT_ROUTES]
       : ['/login']

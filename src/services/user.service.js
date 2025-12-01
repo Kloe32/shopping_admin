@@ -27,3 +27,13 @@ export const deleteUser = async (id) =>{
     console.log("User Deleting Error",error)
   }
 }
+
+export const updateUser = async (id,payload) =>{
+  try {
+    const response = await axiosInstance.put(`${API_ROUTES?.UPDATE_USER_URL}/${id}`,payload)
+    console.log(response?.data)
+    return response?.data
+  } catch (error) {
+    console.log("User Updating Error",error)
+  }
+}
