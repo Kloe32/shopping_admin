@@ -115,7 +115,7 @@ const CreateUser = () => {
                   <div>
                     <div className="flex items-center justify-between mb-4">
                       <div className='w-15 h-15 rounded-full'>
-                        <img src={user.imageUrl || "https://rztmbwyachdqkzksjcsu.supabase.co/storage/v1/object/public/user-profile/placeholder.jpg" } alt="User Profile" className='object-fill bg-cover w-full rounded-full'/>
+                        <img src={user.imageUrl || "https://rztmbwyachdqkzksjcsu.supabase.co/storage/v1/object/public/user-profile/placeholder.jpg" } alt="User Profile" className='object-fill bg-cover w-14 h-14 rounded-full'/>
                       </div>
                       <h2 className="text-lg font-medium text-gray-800">
                         {user.name}

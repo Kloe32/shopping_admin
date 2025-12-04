@@ -120,7 +120,7 @@ const UserModal = ({userData = null,setUserData,setShowForm,setUsers}) => {
                 Roles.length !== 0 ? 
                     
                       Roles.map((role,i) => (
-                        <option key={i} value={role._id}>
+                        <option key={i} value={role?._id}>
                           {role.name}
                         </option>
                       ))

@@ -31,7 +31,6 @@ function AppContent() {
             children: allowedChildren,
           }
         }
-
         return allowedRoutes?.includes(route.path) ? route : null
       })
       .filter(Boolean)

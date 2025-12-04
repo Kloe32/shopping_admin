@@ -7,7 +7,7 @@ import { storeItemToLocalStorage } from '../helper/helper'
 import loading from '../assets/loading.gif'
 const Profile = () => {
   const { userData } = useUser()
-  const [previewUrl, setPreviewUrl] = useState(userData?.imageUrl || '')
+  const [previewUrl, setPreviewUrl] = useState(userData?.imageUrl || null)
   const [name, setName] = useState(userData?.name || '')
   const [email, setEmail] = useState(userData?.email || '')
   const [isEditing, setIsEditing] = useState(false)
@@ -64,14 +64,14 @@ const Profile = () => {
         <div className={`${isEditing ? 'hidden' : 'flex'} gap-3 flex-col`}>
           <div className="flex justify-center">
             <img
-              src={userData.imageUrl}
+              src={userData?.imageUrl || "https://rztmbwyachdqkzksjcsu.supabase.co/storage/v1/object/public/user-profile/placeholder.jpg"}
               alt=""
               className="w-25 h-25 rounded-full"
             />
           </div>
           <div className="flex items-center flex-col gap-3">
             <p className="text-2xl font-bold">{userData.name}</p>
-            <p>{userData.role}</p>
+            <p>{userData?.role?.name}</p>
             <p>{userData.email}</p>
           </div>
           <div className="flex flex-col gap-3">
@@ -91,7 +91,7 @@ const Profile = () => {
             <div className="flex gap-15 items-center">
               <div className="bg-slate-300 p-1 rounded-full">
                 <img
-                  src={previewUrl}
+                  src={previewUrl || "https://rztmbwyachdqkzksjcsu.supabase.co/storage/v1/object/public/user-profile/placeholder.jpg"}
                   alt="Profile Image Preview"
                   className="w-22 h-22 rounded-full"
                 />
@@ -119,7 +119,7 @@ const Profile = () => {
               <input
                 value={name}
                 type="text"
-                className="border-1 border-gray-300 outline-0 p-2 rounded-md"
+                className="border border-gray-300 outline-0 p-2 rounded-md"
                 onChange={(e) => setName(e.target.value)}
               />
             </div>
@@ -130,8 +130,8 @@ const Profile = () => {
               <input
                 value={email}
                 type="text"
-                className="border-1 border-gray-300 outline-0 p-2 rounded-md"
-                onChange={(e) => setName(e.target.value)}
+                className="border border-gray-300 outline-0 p-2 rounded-md"
+                onChange={(e) => setEmail(e.target.value)}
               />
             </div>
             <div className="flex mt-4 justify-end gap-4">

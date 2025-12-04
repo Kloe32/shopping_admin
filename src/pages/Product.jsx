@@ -1,7 +1,18 @@
-import React from 'react'
+import React,{useState} from 'react'
+import ProductModal from '../components/ProductModal'
 
 const Product = () => {
-  return <div>Product</div>
+  const [isShowingForm, setisShowingForm] = useState(true)
+  return <div className=''>
+
+      {
+        isShowingForm && 
+        <ProductModal 
+
+        />
+      }
+
+  </div>
 }
 
 export default Product
