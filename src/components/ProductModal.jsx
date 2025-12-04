@@ -3,15 +3,13 @@ import { IoMdArrowBack } from "react-icons/io";
 import { MdOutlineFileUpload } from "react-icons/md";
 import productPlaceholder from "../assets/img/product_Placeholder.png"
 import { fetchCategories } from '../services/category.service';
-import { fetchUnits } from '../services/unit.services';
 
-const ProductModal = () => {
+const ProductModal = ({open,onClose}) => {
     const [image, setImage] = useState(null)
     const [imagePreview,setImagePreview] =useState(null)
     const [showBtns,setShowBtns] = useState(false)
     const [categories, setCategories] = useState([])
     const [selectedCategory, setSelectedCategory] = useState(null)
-    const [units,setUnits] = useState([])
     const [brand,setBrand] =useState("")
 
     const onChangeImage = (file) => {
@@ -27,25 +25,22 @@ const ProductModal = () => {
             setShowBtns(true)
         }
     }
-    const handleFetchCategories = async ()=>{
-        try {
-            const response = await fetchCategories()
-            if(response?.success){
-                setCategories(response?.data)
-            }  
-        } catch (error) {
-            console.log("Error Fetching Category")
-        }
-    }
+
     useEffect(()=>{
-        handleFetchCategories()
-    },[])
+        if(!open) return
+        (async () =>{
+            const c = await fetchCategories()
+            setCategories(c?.data || [])
+        })();
+    },[open])
 
   return (
     <div className=''>
         {/* Upper Title */}
         <div className='flex p-4 items-center w-full gap-3 shadow-md'>
-            <div className='w-fit rounded-xs flex justify-center items-center p-2 shadow-xs shadow-gray-500 cursor-pointer active:opacity-40 hover:bg-gray-200'>
+            <div className='w-fit rounded-xs flex justify-center items-center p-2 shadow-xs shadow-gray-500 cursor-pointer active:opacity-40 hover:bg-gray-200' 
+                onClick={()=>onClose()}
+            >
                 <IoMdArrowBack size={20}/>
             </div>
             <div>
@@ -153,6 +148,8 @@ const ProductModal = () => {
                         <label>Product Description</label>
                         <textarea className='p-3 border border-gray-200 rounded-md' placeholder='Write Product Description'></textarea>
                     </div>
+
+
                     <div className='flex gap-4'>
                         <div className='p-3 w-full text-center bg-gray-500 text-white rounded-md active:opacity-40 hover:bg-gray-500/70 cursor-pointer'>Cancel</div>
                         <button className='p-3 w-full text-center bg-primary text-white rounded-md active:opacity-40 hover:bg-primary/70 cursor-pointer'>Confirm</button>
